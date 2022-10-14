@@ -11,7 +11,6 @@
 
   methods: {
     addMitarbeiter(){
-      console.log(this.currentFimaId);
       if(this.currentFimaId == null){
         return;
       }
@@ -42,14 +41,12 @@
       fetch('http://localhost:8000/create-mitarbeiter?firmen_id='+this.currentFimaId+'&vorname='+vorname+'&nachname='+nachname+'&email='+email, requestOptions)
         .then(response => response.text())
         .then(result => {
-          console.log(result);
           this.openfirma(this.currentFimaId, this.currentFimaName);
         })
         .catch(error => console.log('error', error));
 
     },
     openfirma(id, name) {
-      console.log(id);
       this.currentFimaId = id;
       this.currentFimaName = name;
 
@@ -65,7 +62,6 @@
       fetch("http://localhost:8000/get-mitarbeiter", requestOptions)
         .then(response => response.text())
         .then(result => {
-          console.log(result);
           this.showMirarbeiters = JSON.parse(result).filter(mit => mit.firmen_id == id);
           if(this.showMirarbeiters.length == 0){
             this.showMirarbeiters = null;
@@ -75,7 +71,6 @@
     },
     addfirma() {
       let newName = prompt('Geben sie den Namen der neuen Frima ein.');
-      console.log(newName);
       
       var myHeaders = new Headers();
       myHeaders.append("Cookie", "XSRF-TOKEN=eyJpdiI6IitLbVRnbnNwMW5oaFRsb1lkZGlPeFE9PSIsInZhbHVlIjoiYkE5d1Y4QUZWZnFkd3V0T05wNWxMWVFScHFkZ2J1Tmc2cjF4OGJMdG1jYmpkbVdySnFrTkZudUZleXRkOVRQdlN1VjErVjBtRm9NWVJ2c3ppZTRmZnplL1RjUVYrcTliRnJQeURaSWNZdUNYM00wSDdOcE5qbWNEV2FGTndzRngiLCJtYWMiOiIzZDNmNmE0NzE5OGIyZDE3YjRiMmQ2ZDk0YzVkZThmNmQxZGJiN2Y2OWRmYjM5ZDcwOGJlZDkwY2UyZTMxMTZjIiwidGFnIjoiIn0%3D; laravel_session=eyJpdiI6InNFT3BnbEhnT2E2dFJZMUcwdHJGenc9PSIsInZhbHVlIjoidEI2MTF6WStkSlB0ZjRjZFBSdmdUWHBtZlkrcFFMeU1zT1ppdHdnTmxnT0xuQ0xObmE4SEV5TFZQbk9WcUdyNGZEbWNsUTRGNlhPUGErMko4eFVCU2hsbkI2UVNQaWZCNEhTNGFsTS9nRDZFMm1NTjEvSFVid0ZNNktaQVZrdkQiLCJtYWMiOiJjYjBmNjY1MzYyY2RhNTY4NTVlM2VhNjZiMzhiZmNlZjAzYzc2YTI1NDQ4ZGU4NWJiMzdmMTkwZWZmYjhmYjBkIiwidGFnIjoiIn0%3D");
@@ -89,12 +84,11 @@
       fetch("http://localhost:8000/create-firma?firmenname="+newName, requestOptions)
         .then(response => response.text())
         .then(result => {
-          console.log(result);
           this.reloadPage();
         })
         .catch(error => console.log('error', error));
       },
-    reloadPage(){
+      reloadPage(){
         var myHeaders = new Headers();
         myHeaders.append("Cookie", "XSRF-TOKEN=eyJpdiI6IjQ0MUF3UWpwc0tLWHBBbzU5Nzh2K1E9PSIsInZhbHVlIjoiWUF0dDFYSmRSdldyNk1sc21PM2pBK1pUOTFnQy8wN1VWdTJRbEcxZWc0emJYaFdhRG1ZdUVTSjFFZjRuUGZjK2VRRUVGbVlwVlUzRjd4SE5BVDkwbXk5L085emVqNmIxZW5aYXhmZ0VFSWxxNkxKVEdUVVdzWGNnMjM4dGZCYlAiLCJtYWMiOiI4ODczZjE2YzE4MmMzNzFjMDBlYTRlMWIzMTE0OWQ3YTBmN2M0YzMzMDE4YWMxMTE0NDg0MTNkMmJmZTk5MmI4IiwidGFnIjoiIn0%3D; laravel_session=eyJpdiI6InNjUmtUWU04SllmNmJKZ3BrdTVrSnc9PSIsInZhbHVlIjoiQk5zdkpaWGYyYnY1bzNiZWZGQ3NzRUdITlg2RHVEWkdtdlQySXJVRUdheHFycWNFbE5SemczR2c3Nk8rNHRsRFI3a3NlZ256TG1DZ2lKTGdPU2d2aEhVNFZRM2QvN3pzZjFhcTBCVWdIQ3hKR09XdUVIQ0tYY3VzbXVtZ3NtdWsiLCJtYWMiOiI3NTA5MGEyNTJjYTEyNmJiNmNkNGY3ZGIxYzZhNzFiODBiODZjYjVhYjM4ZjUzNTQyNWFmYWQxODU2ZjNiZTM5IiwidGFnIjoiIn0%3D");
 
@@ -107,7 +101,6 @@
         fetch("http://localhost:8000/get-firma", requestOptions)
           .then(response => response.text())
           .then(result => {
-            console.log(result);
             this.data = JSON.parse(result);
           })
           .catch(error => console.log('error', error));
@@ -178,19 +171,19 @@
   }
 
   table {
-  font-family: arial, sans-serif;
-  border-collapse: collapse;
-  width: 100%;
-}
-
-td, th {
-  border: 1px solid #dddddd;
-  text-align: left;
-  padding: 8px;
-}
-
-#wrapper {
-    float: left;
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
     width: 100%;
-}
+  }
+
+  td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+  }
+
+  #wrapper {
+      float: left;
+      width: 100%;
+  }
 </style>
